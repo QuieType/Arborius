@@ -69,7 +69,7 @@ function makeCard(card) {
         </div>
       </div>`;
     
-    document.body.appendChild(wrapper);
+    document.getElementById('game').appendChild(wrapper);
     
     wrapper.addEventListener('mousedown', (e) => {
         dragged = wrapper;
