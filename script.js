@@ -1,5 +1,12 @@
 const socket = new WebSocket('wss://arborius.online');
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSRV9VdYwvksew0caxfvgXMwOmXT4xfMDT8jEb-B5dKJGXYK1VHnDdMKMdmcXhxNU7rZ3mnWmMPr1mx/pub?output=csv';
+const gridSize = 150;
+
+let dragged = null;
+let offsetX = 0;
+let offsetY = 0;
+let currentZ = 1;
+let cardcount = 0;
 
 socket.addEventListener('open', () => {
     console.log('WebSocket connection established');
@@ -48,13 +55,7 @@ socket.addEventListener('message', (event) => {
     }
 });
 
-/*const csvData = `copies,name,archea,trigger,ability,imgurl,fancyname,fancylore,fancyimage,,,
-1,blob,1,play,must freeze,blob.png,The Nameless Form,,,blob,blob.png,5.704545455
-1,amulet,2,unplay,freezes,amulet.png,Embowelments of the Jar Man,,,amulet,amulet.png,
-1,mushroom,2,rotate,rotate,mushroom.png,Forest Mushroom,,,mushroom,mushroom.png,
-1,horse,3,advance,advance,horse.png,Omnilogue of the Redeemer,,omnilogue.png,horse,horse.png,
-`;*/
-fetch(csvUrl) // ← replace with your real URL
+fetch(csvUrl)
   .then(response => response.text())
   .then(csvData => {
     const rows = csvData.trim().split("\n");
@@ -77,23 +78,6 @@ fetch(csvUrl) // ← replace with your real URL
   .catch(error => {
     console.error('Failed to fetch CSV data:', error);
   });
-
-
-/*const rows = csvData.trim().split("\n");
-const headers = rows[0].split(",");
-const cards = rows.slice(1).map(row => {
-    const values = row.split(",");
-    const obj = {};
-    headers.forEach((key, i) => obj[key] = values[i]);
-    return obj;
-});*/
-
-let dragged = null;
-let offsetX = 0;
-let offsetY = 0;
-let currentZ = 1;
-const gridSize = 150;
-let cardcount = 0;
 
 function sendCardMove(cardEl) {
     if (!socket || socket.readyState !== WebSocket.OPEN) return;
@@ -148,19 +132,6 @@ function makeCard(card) {
     wrapper.addEventListener('mouseenter', () => hovered = wrapper);
     wrapper.addEventListener('mouseleave', () => hovered = null);
 }
-
-/*rows.slice(1).forEach(row => {
-    const values = row.split(",");
-    const card = {};
-    headers.forEach((key, i) => card[key] = values[i]);
-    card.type = "#fee";
-    card.bordertype = "#800";
-    makeCard(card);
-    card.bordertype = "#008";
-    card.type = "#eef";
-    makeCard(card);
-});*/
-  
 
 document.addEventListener('mousemove', (e) => {
     if (dragged) {
