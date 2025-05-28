@@ -1,4 +1,3 @@
-const socket = new WebSocket('wss://arborius.online');
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSRV9VdYwvksew0caxfvgXMwOmXT4xfMDT8jEb-B5dKJGXYK1VHnDdMKMdmcXhxNU7rZ3mnWmMPr1mx/pub?output=csv';
 const gridSize = 150;
 
@@ -7,10 +6,6 @@ let offsetX = 0;
 let offsetY = 0;
 let currentZ = 1;
 let cardcount = 0;
-
-socket.addEventListener('open', () => {
-    console.log('WebSocket connection established');
-});
 
 fetch(csvUrl)
   .then(response => response.text())
@@ -95,102 +90,4 @@ document.addEventListener('mousemove', (e) => {
         dragged.style.left = (e.clientX - offsetX) + 'px';
         dragged.style.top  = (e.clientY - offsetY) + 'px';
     }
-});
-
-document.addEventListener('keydown', (e) => {
-    if (!hovered) {return;}
-    if ((e.key === 'q' || e.key === 'e')) {
-        let currentRotation = parseInt(hovered.getAttribute('data-rotation') || '0', 10);
-        if (e.key === 'q') currentRotation -= 90;
-        if (e.key === 'e') currentRotation += 90;
-        hovered.setAttribute('data-rotation', currentRotation);
-        
-        const cardFrame = hovered.querySelector('.cardframe');
-        const angle = currentRotation % 360;
-        
-        // Adjust box shadow based on rotation angle
-        let shadowX = 4, shadowY = 4, shadowX2 = 7, shadowY2 = 7;
-        
-        const borderColor = getComputedStyle(cardFrame).borderColor;
-        cardFrame.style.boxShadow = `${shadowX}px ${shadowY}px 0 ${borderColor}, ${shadowX2}px ${shadowY2}px 0 ${borderColor}`;
-
-        // Apply rotation only to inner content
-        const info = cardFrame.querySelector('.info');
-        info.style.transform = `rotate(${currentRotation}deg)`;
-        sendCardMove(hovered);
-    }
-    
-    if (e.key === 'd') {
-        const clone = hovered.cloneNode(true);
-        const offset = 20;
-        clone.dataset.cardId = cardcount++;
-        clone.style.left = (parseInt(hovered.style.left, 10) + offset) + 'px';
-        clone.style.top = (parseInt(hovered.style.top, 10) + offset) + 'px';
-        clone.style.zIndex = 100;
-        document.body.appendChild(clone);
-        
-        // Ensure cloned element has same events
-        clone.addEventListener('mousedown', (e) => {
-            dragged = clone;
-            offsetX = e.clientX - clone.offsetLeft;
-            offsetY = e.clientY - clone.offsetTop;
-            clone.style.zIndex = 100;
-            clone.style.cursor = 'grabbing';
-            clone.classList.add('dragging');
-        });
-        clone.addEventListener('mouseenter', () => hovered = clone);
-        clone.addEventListener('mouseleave', () => hovered = null);
-        socket.send(JSON.stringify({
-            type: 'duplicate',
-            id: clone.dataset.cardId,
-            srcid: hovered.dataset.cardId,
-            x: parseInt(offsetX),
-            y: parseInt(offsetY),
-            z: clone.dataset.overlapCount,
-            rotation: parseInt(clone.getAttribute('data-rotation') || '0', 10)
-        }));
-    }
-    if (e.key === 'Backspace') {
-        socket.send(JSON.stringify({
-            type: 'delete',
-            id: hovered.dataset.cardId
-        }));
-        hovered.remove();
-        hovered = null;
-    }
-});
-
-document.addEventListener('mouseup', () => {
-    if (!dragged) {return;}
-    let left = parseInt(dragged.style.left, 10);
-    let top = parseInt(dragged.style.top, 10);
-    dragged.style.left = Math.round(left / gridSize) * gridSize + 'px';
-    dragged.style.top = Math.round(top / gridSize) * gridSize + 'px';
-    dragged.style.cursor = 'grab';
-    dragged.classList.remove('dragging');
-    
-    // Check for overlap and count
-    const draggedRect = dragged.getBoundingClientRect();
-    let overlapCount = 0;
-    document.querySelectorAll('.draggable').forEach(el => {
-        if (el !== dragged) {
-            const rect = el.getBoundingClientRect();
-            const overlap = !(
-                draggedRect.right < rect.left+50 ||
-                draggedRect.left > rect.right-50 ||
-                draggedRect.bottom < rect.top+50 ||
-                draggedRect.top > rect.bottom-50
-            );
-            if (overlap) {
-                overlapCount++;
-                console.log(overlapCount);
-            }
-        }
-    });
-    dragged.dataset.overlapCount = overlapCount;
-    sendCardMove(dragged);
-    
-    // Apply transform based on overlap count
-    dragged.style.transform = `translate(${-10 * overlapCount}px, ${-10 * overlapCount}px)`;
-    dragged = null;
 });
