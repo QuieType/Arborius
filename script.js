@@ -47,21 +47,45 @@ socket.addEventListener('message', (event) => {
     }
 });
 
-const csvData = `copies,name,archea,trigger,ability,imgurl,fancyname,fancylore,fancyimage,,,
+/*const csvData = `copies,name,archea,trigger,ability,imgurl,fancyname,fancylore,fancyimage,,,
 1,blob,1,play,must freeze,blob.png,The Nameless Form,,,blob,blob.png,5.704545455
 1,amulet,2,unplay,freezes,amulet.png,Embowelments of the Jar Man,,,amulet,amulet.png,
 1,mushroom,2,rotate,rotate,mushroom.png,Forest Mushroom,,,mushroom,mushroom.png,
 1,horse,3,advance,advance,horse.png,Omnilogue of the Redeemer,,omnilogue.png,horse,horse.png,
-`;
+`;*/
+fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSRV9VdYwvksew0caxfvgXMwOmXT4xfMDT8jEb-B5dKJGXYK1VHnDdMKMdmcXhxNU7rZ3mnWmMPr1mx/pub?output=csv') // ← replace with your real URL
+  .then(response => response.text())
+  .then(csvData => {
+    const rows = csvData.trim().split("\n");
+    const headers = rows[0].split(",");
 
-const rows = csvData.trim().split("\n");
+    rows.slice(1).forEach(row => {
+        const values = row.split(",");
+        const card = {};
+        headers.forEach((key, i) => card[key] = values[i]);
+
+        card.type = "#fee";
+        card.bordertype = "#800";
+        makeCard(card);
+
+        card.bordertype = "#008";
+        card.type = "#eef";
+        makeCard(card);
+    });
+  })
+  .catch(error => {
+    console.error('Failed to fetch CSV data:', error);
+  });
+
+
+/*const rows = csvData.trim().split("\n");
 const headers = rows[0].split(",");
 const cards = rows.slice(1).map(row => {
     const values = row.split(",");
     const obj = {};
     headers.forEach((key, i) => obj[key] = values[i]);
     return obj;
-});
+});*/
 
 let dragged = null;
 let offsetX = 0;
@@ -124,7 +148,7 @@ function makeCard(card) {
     wrapper.addEventListener('mouseleave', () => hovered = null);
 }
 
-rows.slice(1).forEach(row => {
+/*rows.slice(1).forEach(row => {
     const values = row.split(",");
     const card = {};
     headers.forEach((key, i) => card[key] = values[i]);
@@ -134,7 +158,7 @@ rows.slice(1).forEach(row => {
     card.bordertype = "#008";
     card.type = "#eef";
     makeCard(card);
-});
+});*/
   
 
 document.addEventListener('mousemove', (e) => {
