@@ -1,14 +1,19 @@
 //event.js
 //listening for different inputs
 
+//Todo: divide this code into websocket.js, input.js, and resolve.js
+
+//constants
 const socket = new WebSocket('wss://arborius.online');
 
+//connect to websocket
 socket.addEventListener('open', () => {
     console.log('WebSocket connection established');
 });
 
 socket.addEventListener('message', (event) => {
     const msg = JSON.parse(event.data);
+    //snap cards to grid when moving
     if (msg.type === 'move') {
         const target = [...document.querySelectorAll('.draggable')].find(el => el.dataset.cardId === msg.id);
         if (target) {
@@ -21,11 +26,13 @@ socket.addEventListener('message', (event) => {
             info.style.transform = `rotate(${msg.rotation}deg)`;
         }
     }
+    //delete cards
     else if (msg.type === 'delete') {
         const target = [...document.querySelectorAll('.draggable')].find(el => el.dataset.cardId === msg.id);
         target.remove();
         target = null;
     }
+    //duplicate cards
     else if (msg.type === 'duplicate') {
         const target = [...document.querySelectorAll('.draggable')].find(el => el.dataset.cardId === msg.srcid);
         const clone = target.cloneNode(true);
@@ -37,6 +44,7 @@ socket.addEventListener('message', (event) => {
         document.body.appendChild(clone);
         
         // Ensure cloned element has same events
+        // Can we simplify this?
         clone.addEventListener('mousedown', (e) => {
             dragged = clone;
             offsetX = e.clientX - clone.offsetLeft;
@@ -51,7 +59,9 @@ socket.addEventListener('message', (event) => {
 });
 
 document.addEventListener('keydown', (e) => {
+    //do something with this probably
     if (!hovered) {return;}
+    //rotation: q or e
     if ((e.key === 'q' || e.key === 'e')) {
         let currentRotation = parseInt(hovered.getAttribute('data-rotation') || '0', 10);
         if (e.key === 'q') currentRotation -= 90;
@@ -73,6 +83,7 @@ document.addEventListener('keydown', (e) => {
         sendCardMove(hovered);
     }
     
+    //clone cards: d
     if (e.key === 'd') {
         const clone = hovered.cloneNode(true);
         const offset = 20;
@@ -83,6 +94,7 @@ document.addEventListener('keydown', (e) => {
         document.body.appendChild(clone);
         
         // Ensure cloned element has same events
+        //ugh
         clone.addEventListener('mousedown', (e) => {
             dragged = clone;
             offsetX = e.clientX - clone.offsetLeft;
@@ -103,6 +115,7 @@ document.addEventListener('keydown', (e) => {
             rotation: parseInt(clone.getAttribute('data-rotation') || '0', 10)
         }));
     }
+    //delete cards: backspace
     if (e.key === 'Backspace') {
         socket.send(JSON.stringify({
             type: 'delete',
@@ -113,6 +126,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+//release cards
 document.addEventListener('mouseup', () => {
     if (!dragged) {return;}
     let left = parseInt(dragged.style.left, 10);
