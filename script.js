@@ -1,4 +1,5 @@
 const socket = new WebSocket('wss://arborius.online');
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSRV9VdYwvksew0caxfvgXMwOmXT4xfMDT8jEb-B5dKJGXYK1VHnDdMKMdmcXhxNU7rZ3mnWmMPr1mx/pub?output=csv';
 
 socket.addEventListener('open', () => {
     console.log('WebSocket connection established');
@@ -53,7 +54,7 @@ socket.addEventListener('message', (event) => {
 1,mushroom,2,rotate,rotate,mushroom.png,Forest Mushroom,,,mushroom,mushroom.png,
 1,horse,3,advance,advance,horse.png,Omnilogue of the Redeemer,,omnilogue.png,horse,horse.png,
 `;*/
-fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSRV9VdYwvksew0caxfvgXMwOmXT4xfMDT8jEb-B5dKJGXYK1VHnDdMKMdmcXhxNU7rZ3mnWmMPr1mx/pub?output=csv') // ← replace with your real URL
+fetch(csvUrl) // ← replace with your real URL
   .then(response => response.text())
   .then(csvData => {
     const rows = csvData.trim().split("\n");
