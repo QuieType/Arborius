@@ -29,13 +29,15 @@
   color: white;
   cursor: pointer;
 }
-#red-list #blue-list{
+#red-list, #blue-list{
   position: absolute;
-  margin-top: 5px;
+  margin-top: 20px;
   background: white;
   border: 1px solid #ccc;
   display: none;
   z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto; 
 }
 #red-list div, #blue-list div{
   padding: 8px 12px;
