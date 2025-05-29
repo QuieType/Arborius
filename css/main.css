@@ -26,3 +26,6 @@ body {
     width: 50%;
     height: 100%;
 }
+.hidden {
+  display: none !important;
+}
