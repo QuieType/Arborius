@@ -22,3 +22,31 @@
 #menu3 {
     transform: translateX(220%);
 }
+#hover-target {
+  display: inline-block;
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+}
+#red-list #blue-list{
+  position: absolute;
+  margin-top: 5px;
+  background: white;
+  border: 1px solid #ccc;
+  display: none;
+  z-index: 1000;
+}
+#red-list div, #blue-list div{
+  padding: 8px 12px;
+  cursor: pointer;
+}
+#red-list div:hover, #blue-list div:hover  {
+  background-color: #f0f0f0;
+}
+#menu1:hover + #red-list,
+#menu2:hover + #blue-list,
+#red-list:hover,
+#blue-list:hover {
+  display: block;
+}
