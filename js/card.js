@@ -37,7 +37,7 @@ fetch(csvUrl)
     });
 
     console.log("Cards loaded into library:", cardLibrary);
-    addCard("vine", "blue");
+    //addCard("vine", "blue"); //test
   })
   .catch(error => {
     console.error('Failed to fetch CSV data:', error);
@@ -50,6 +50,12 @@ fetch(csvUrl)
       allCardNames.forEach(text => {
         const item = document.createElement('div');
         item.textContent = text;
+
+        item.onclick = () => {
+          addCard(text, 'red'); 
+          dropdown.style.display = 'none';
+        }
+
         dropdown.appendChild(item);
       });
     });
