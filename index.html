@@ -3,34 +3,30 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Drag Cards</title>
-    <link rel="stylesheet" href="style.css"/>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background-size: cover;
-            overflow: hidden;
-            background: linear-gradient(
-            120deg,
-            #f4f4f4,
-            #e0e0ff,
-            #f0e0ff,
-            #e0fff4
-              );
-        }
-        .draggable {
-            position: absolute;
-            cursor: grab;
-            user-select: none;
-        }
-        .draggable:hover {
-            filter: drop-shadow(0 0 4px cyan);
-        }
-    </style>
+    <title>Arborius | Play</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+
+    <!--styles-->
+    <link rel="stylesheet" href="css/tile.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/menu.css"/>
+    <link rel="stylesheet" href="css/rules.css"/>
 </head>
 <body>
-<script src="script.js"></script>
+    <div id="menu-bar">
+        <span id="menu1"><h2>Red Tiles</h2></span>
+        <div id="red-list"></div>
+        <span id="menu2"><h2>Blue Tiles</h2></span>
+        <div id="blue-list"></div>
+        <!--<span id="menu3"><h2>Option 3</h2></span>-->
+    </div>
+    <div id="game"></div>
+    <div id="rules-container">
+        <iframe id="rules" src="https://docs.google.com/document/d/1s-wMbaeLK1Wj_3EW9jK1CiukDtGHnG70Dh-t9j8UB5o/preview?usp=embed_googleplus" allowfullscreen=""></iframe>
+    </div>
+
+<!--scripts-->
+<script src="js/event.js"></script>
+<script src="js/card.js"></script>
 </body>
 </html>

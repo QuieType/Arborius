@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-size: cover;
+    overflow: hidden;
+    background: linear-gradient(
+    120deg,
+    #f4f4f4,
+    #e0e0ff,
+    #f0e0ff,
+    #e0fff4
+      );
+}
+.draggable {
+    position: absolute;
+    cursor: grab;
+    user-select: none;
+}
+.draggable:hover {
+    filter: drop-shadow(0 0 4px cyan);
+}
+#game {
+    position: relative;
+    top: 10%; /* moves it below menu-bar */
+    width: 50%;
+    height: 100%;
+}
+.hidden {
+  display: none !important;
+}
