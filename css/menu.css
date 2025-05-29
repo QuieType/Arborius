@@ -1,6 +1,57 @@
 #menu-bar {
     position: absolute;
-    background-color: black;
-    width: 100%;
-    height: 20%;
+    /*background-color: black;*/
+    width: 50%;
+    /*height: 10%;*/
+}
+#menu1, #menu2, #menu3 {
+    position: absolute;
+    /*background-color: black;*/
+    width: 20%;
+    height: 100%;
+    border-radius: 0px;
+    text-align: center;
+    color: black;
+}
+#menu1 :hover, #menu2 :hover, #menu3 :hover{
+    background-color: #e0fff4;
+}
+#menu2 {
+    transform: translateX(110%);
+}
+#menu3 {
+    transform: translateX(220%);
+}
+#hover-target {
+  display: inline-block;
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+}
+#red-list, #blue-list{
+  position: absolute;
+  margin-top: 40px;
+  background: white;
+  border: 1px solid #ccc;
+  display: none;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto; 
+}
+#blue-list {
+    left: 30%;
+}
+#red-list div, #blue-list div{
+  padding: 8px 12px;
+  cursor: pointer;
+}
+#red-list div:hover, #blue-list div:hover  {
+  background-color: #f0f0f0;
+}
+#menu1:hover + #red-list,
+#menu2:hover + #blue-list,
+#red-list:hover,
+#blue-list:hover {
+  display: block;
 }

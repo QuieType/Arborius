@@ -22,7 +22,10 @@ body {
 }
 #game {
     position: relative;
-    /*top: 20%; /* moves it below menu-bar */
-    width: 100%;
-    height: 80%; /* or whatever height you need */
+    top: 10%; /* moves it below menu-bar */
+    width: 50%;
+    height: 100%;
+}
+.hidden {
+  display: none !important;
 }
