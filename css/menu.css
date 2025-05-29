@@ -2,6 +2,7 @@
     position: absolute;
     /*background-color: black;*/
     width: 50%;
+    margin: auto;
     /*height: 10%;*/
 }
 #menu1, #menu2, #menu3 {
@@ -11,34 +12,56 @@
     height: 100%;
     border-radius: 0px;
     text-align: center;
+    font-family: serif;
     color: black;
+    border-radius: 8px;          /* Rounded corners */
+    padding: 10px;
+    background-color: #5b5b5b;   /* Dark red */
 }
 #menu1 :hover, #menu2 :hover, #menu3 :hover{
-    background-color: #e0fff4;
+    background-color: #0004;
 }
 #menu2 {
-    transform: translateX(110%);
+    color: #ffcdd2;              /* Light red text */
+    height: 1em;
+    margin: 5px;
+    border: 2px solid #c32424;   /* Light red border */
+    background-color: #2c1111;   /* Dark red */
 }
 #menu3 {
-    transform: translateX(220%);
+    transform: translateX(110%);
+    color: #cdd0ff;              /* Light red text */
+    height: 1em;
+    margin: 5px;
+    border: 2px solid #221ab9;   /* Light red border */
+    background-color: rgb(19, 19, 32);   /* Dark red */
 }
 #hover-target {
   display: inline-block;
   padding: 10px;
-  background-color: #3498db;
+  background-color: #0008;
   color: white;
   cursor: pointer;
 }
-#red-list, #blue-list{
+.list {
   position: absolute;
   margin-top: 40px;
-  background: white;
   border: 1px solid #ccc;
   display: none;
   z-index: 1000;
   max-height: 200px;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
+
+#red-list {
+    transform: translateX(34%);
+    background: #ffe5e5; /* light red */
+}
+
+#blue-list {
+  background: #e5f0ff; /* light blue */
+}
+
 #blue-list {
     left: 30%;
 }
@@ -49,8 +72,8 @@
 #red-list div:hover, #blue-list div:hover  {
   background-color: #f0f0f0;
 }
-#menu1:hover + #red-list,
-#menu2:hover + #blue-list,
+#menu2:hover + #red-list,
+#menu3:hover + #blue-list,
 #red-list:hover,
 #blue-list:hover {
   display: block;
