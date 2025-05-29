@@ -10,10 +10,12 @@
     width: 10%;
     height: 100%;
     padding-left: 10%;
+    border-radius: 8px;
+    border-color: black;
 }
 #menu2 {
-    transform: translateX(100%);
+    transform: translateX(110%);
 }
 #menu3 {
-    transform: translateX(200%);
+    transform: translateX(220%);
 }
