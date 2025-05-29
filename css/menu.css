@@ -31,13 +31,16 @@
 }
 #red-list, #blue-list{
   position: absolute;
-  margin-top: 20px;
+  margin-top: 40px;
   background: white;
   border: 1px solid #ccc;
   display: none;
   z-index: 1000;
   max-height: 200px;
   overflow-y: auto; 
+}
+#blue-list {
+    left: 30%;
 }
 #red-list div, #blue-list div{
   padding: 8px 12px;

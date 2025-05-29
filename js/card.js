@@ -42,23 +42,31 @@ fetch(csvUrl)
   .catch(error => {
     console.error('Failed to fetch CSV data:', error);
   })
-  .then(
-    () => {
-      const allCardNames = getAllCardNames();
-      const dropdown = document.getElementById('red-list');
-
-      allCardNames.forEach(text => {
-        const item = document.createElement('div');
-        item.textContent = text;
-
-        item.onclick = () => {
-          addCard(text, 'red'); 
-          dropdown.style.display = 'none';
-        }
-
-        dropdown.appendChild(item);
-      });
+  .then(() => {
+    const allCardNames = getAllCardNames();
+  
+    // Red dropdown
+    const redDropdown = document.getElementById('red-list');
+    allCardNames.forEach(text => {
+      const item = document.createElement('div');
+      item.textContent = text;
+      item.onclick = () => {
+        addCard(text, 'red');
+      };
+      redDropdown.appendChild(item);
     });
+  
+    // Blue dropdown
+    const blueDropdown = document.getElementById('blue-list');
+    allCardNames.forEach(text => {
+      const item = document.createElement('div');
+      item.textContent = text;
+      item.onclick = () => {
+        addCard(text, 'blue');
+      };
+      blueDropdown.appendChild(item);
+    });
+  });
 
 function addCard(name, color) {
   const variants = cardLibrary[name];
