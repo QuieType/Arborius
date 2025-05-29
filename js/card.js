@@ -68,7 +68,7 @@ fetch(csvUrl)
     });
   });
 
-function addCard(name, color) {
+function addCard(name, color, broadcast = true) {
   const variants = cardLibrary[name];
   if (!variants) {
     console.warn(`No card found with name: ${name}`);
@@ -85,6 +85,15 @@ function addCard(name, color) {
     card.x = 2*gridSize;
   }
   makeCard(card);
+  
+  if (broadcast && socket.readyState === WebSocket.OPEN) {
+  socket.send(JSON.stringify({
+    type: 'create',
+    name,
+    color
+  }));
+}
+
 }
 
 

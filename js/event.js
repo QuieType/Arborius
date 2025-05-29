@@ -56,6 +56,10 @@ socket.addEventListener('message', (event) => {
         clone.addEventListener('mouseenter', () => target = clone);
         clone.addEventListener('mouseleave', () => target = null);
     }
+    else if (msg.type === 'create') {
+        addCard(msg.name, msg.color, false); // Don't rebroadcast again
+    }
+
 });
 
 document.addEventListener('keydown', (e) => {
