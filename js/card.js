@@ -80,7 +80,10 @@ function addCard(name, color) {
     console.warn(`No "${color}" variant for card: ${name}`);
     return;
   }
-
+  console.log(color)
+  if (color == "blue") {
+    card.x = 2*gridSize;
+  }
   makeCard(card);
 }
 
