@@ -41,7 +41,18 @@ fetch(csvUrl)
   })
   .catch(error => {
     console.error('Failed to fetch CSV data:', error);
-  });
+  })
+  .then(
+    () => {
+      const allCardNames = getAllCardNames();
+      const dropdown = document.getElementById('red-list');
+
+      allCardNames.forEach(text => {
+        const item = document.createElement('div');
+        item.textContent = text;
+        dropdown.appendChild(item);
+      });
+    });
 
 function addCard(name, color) {
   const variants = cardLibrary[name];
@@ -123,4 +134,7 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
+function getAllCardNames() {
+  return Object.keys(cardLibrary).sort();
+}
 
