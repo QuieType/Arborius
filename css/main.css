@@ -6,10 +6,10 @@ body {
     overflow: hidden;
     background: linear-gradient(
     120deg,
-    #f4f4f4,
-    #e0e0ff,
-    #f0e0ff,
-    #e0fff4
+    #300,
+    #003,
+    #030,
+    #330
       );
 }
 .draggable {
@@ -18,7 +18,7 @@ body {
     user-select: none;
 }
 .draggable:hover {
-    filter: drop-shadow(0 0 4px cyan);
+    filter: drop-shadow(0 0 4px white);
 }
 #game {
     position: relative;

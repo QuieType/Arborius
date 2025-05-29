@@ -80,7 +80,10 @@ function addCard(name, color) {
     console.warn(`No "${color}" variant for card: ${name}`);
     return;
   }
-
+  console.log(color)
+  if (color == "blue") {
+    card.x = 2*gridSize;
+  }
   makeCard(card);
 }
 
@@ -113,7 +116,7 @@ function makeCard(card) {
           <div class="name" style="background-color: ${card.namecolor};">
             <h1>${card.name}</h1><h5>${card.archea}</h5>
           </div>
-          <img class="minitableau" src="${card.imgurl}">
+          <img class="minitableau" src="../card/${card.imgurl}">
           <div class="description" style="background-color: #fff0;">
             <div class="text">
               <div class="trigger">${card.trigger}</div>
