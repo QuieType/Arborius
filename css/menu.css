@@ -1,7 +1,7 @@
 #menu-bar {
     position: absolute;
     background-color: black;
-    width: 100%;
+    width: 50%;
     height: 10%;
 }
 #menu1, #menu2, #menu3 {
