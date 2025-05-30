@@ -3,6 +3,7 @@ const gridSize = 150;
 const cardLibrary ={}
 
 let dragged = null;
+let hovered = null;
 let offsetX = 0;
 let offsetY = 0;
 let currentZ = 1;
