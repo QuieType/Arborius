@@ -294,7 +294,6 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 csvTextData = await response.text(); // Store raw CSV text
-                console.log(csvTextData);
                 // Parse CSV data into cardTemplates Map
                 if (csvTextData) {
                     const rows = csvTextData.split('\n').filter(row => row.trim() !== '');
@@ -305,7 +304,6 @@
                         cardTemplates[name] = row;
                         cardnames.push(name);
                     });
-                    console.log(cardTemplates);
                     console.log("Card templates populated:", cardTemplates.size, "cards");
                 }
 
@@ -321,6 +319,7 @@
                 item.onclick = () => {
                     const newcard = processCsvRow(cardTemplates[text]);
                     cardsData.push(newcard);
+                    console.log(newcard);
                     ws.send(JSON.stringify({ type: 'createcard', data: newcard.stringify() }));
                     renderCards();
                 };
@@ -1011,8 +1010,7 @@
                 console.log('Received sync message:', message);
                 // Respond with a gamestate message
                 if (ws && ws.readyState === WebSocket.OPEN) {
-                    // Send a stringified version of cardsData
-                    ws.send(JSON.stringify({ type: 'gamestate', data: JSON.stringify(cardsData.map(card => card.stringify()))}));
+                    ws.send(JSON.stringify({ type: 'gamestate', count: cardid, data: JSON.stringify(cardsData.map(card => card.stringify()))}));
                 }
                 break;
                 case 'gamestate':
@@ -1022,7 +1020,7 @@
                 
                 // Update cardsData to match the received cardsData
                 cardsData = JSON.parse(message.data).map(parseCard); // Use the new parseCard function
-                
+                cardid = message.count;
                 // Re-render all the elements with renderCards
                 renderCards();
                 break;
