@@ -280,51 +280,8 @@
         const COLOR_GRAY_500 = '#6B7280';
         
         // Variable to store the CSV text
-        let csvTextData = `
-name,cost,trigger,ability,imgurl,fancyname,fancylore,fancyimage,,,
-blob,1,play,must freeze,blob.png,The Nameless Form,,,blob,blob.png,5.727272727
-amulet,2,unplay,freezes,amulet.png,Embowelments of the Jar Man,,,amulet,amulet.png,
-mushroom,2,rotate,rotate,mushroom.png,Forest Mushroom,,,mushroom,mushroom.png,
-potion,2,unplays,$burrow,potion.png,Ancient Amulet,,,,,
-peasant,2,burrow,rotate,peasant.png,Iconoclast of the Sunken Ones,,peasanthut.png,peasant,peasant.png,
-cat,2,burrow,ascend,cat.png,,,,,,
-brute,3,defend,plays,brute.png,Slave to the Lower Firmament,,beast.png,brute,brute.png,
-relic,3,$exit,(freezes 1adj),snowman.png,Relic of Goar,,,relic,snowman.png,
-horse,3,advance,advance,horse.png,Omnilogue of the Redeemer,,omnilogue.png,horse,horse.png,
-worm,3,burrow,(rotates 1adj),worm.png,,,,,,
-berserker,4,advance,attack,berserker.png,Disciple of the Underclast,,,berserker,berserker.png,
-onion,4,advance,(descends 1adj),onion.png,Tome of the Ardential Abyss,,,,,
-dragon,4,play,(rotates 1adj),dragon.png,Erowood Hearth,,,dragon,dragon.png,
-herb,4,attack,attack $burrow,herb.png,Beast of the Underclast,,,,,
-backpack,4,burrow,absorbs 2adj,box.png,Quickskin Pack,,,backpack,box.png,
-rampart,4,play,burrow plays,rampart.png,Form of the Occlusive,,karalscastle.png,rampart,rampart.png,
-moonbeam,4,freeze,(enter 1adj),moon.png,Moon Beam,,,moonbeam,moon.png,
-tome,4,play,enter,tome.png,Erowood Fruit,,,tome,tome.png,
-vagrant,4,freeze,(rotates 1adj),vagrant.png,Spiritus of the Glade,,,,,
-wizard,4,play,unplay,wizard.png,,,,,,
-sprout,5,plays,plays,sprout.png,,,,,,
-castle,5,play,plays,castle.png,Emanation of the Ramparts,,foggyrampart.png,castle,castle.png,
-monk,5,rotate,(descends 1adj),monk.png,Spiritus of the Fountain,,,,,
-vortex,5,$exit,rotate,vortex.png,Embowelment of Sroam,,,,,
-gladiator,5,unplays,(unplays 3adj ally),gladiator.png,Frost Giant,,firegladiator.png,gladiator,gladiator.png,
-vulture,5,exit,enter,vulture.png,Court of Sroam,,,,,
-doodad,5,rotate,$freezes,doodad.png,Patron of Goar,,,,,
-native,6,(burrows 1adj),$freeze,native.png,Librarian,,,,,
-soldier,6,advance,rotate,soldier.png,Master of the Golden Goblet,,ravineknight.png,soldier,soldier.png,
-miner,6,burrow,(burrows 3adj),miner.png,Abyssal Denizen,,,miner,miner.png,
-demon,6,rotate,attack,demon.png,Mask of the Blasphemer,,firedemon.png,demon,demon.png,
-bastion,6,play,plays plays,bastion.png,Bastion of the Sunken Ones,,bastion.png,bastion,bastion.png,
-scout,6,$exit,(attack 1adj),councilmember.png,Ornament of Sroam,,councilman.png,councilmember,councilmember.png,
-sorceress,6,freeze,(freezes 3adj),sorceress.png,Servant of Goar,,mossysorceress.png,sorceress,sorceress.png,
-sword,7,ascend,rotate ascend,sword.png,Vordorn Forge Sword,,,,,
-alchemist,7,(freezes 1adj),(ascends 1adj),alchemist.png,Ornament of Goar,,,alchemist,alchemist.png,
-skinwalker,7,ascend,ascend (attack 1adj),skinwalker.png,Crumbling Relic,,ornamentofgoar.png,skinwalker,skinwalker.png,
-vial,7,rotate,enter,vial.png,Bookskin,,,,,
-zealot,7,freeze,(rotates descends 1adj),zealot.png,Emanation of Goar,,,,,
-viking,8,rotate,advance advance,giant.png,Harbinger of Equatince,,,viking,giant.png,
-vine,9,enter,exit,vine.png,Ailo the Wanderer,,,,,
-        `;
-        const csvUrl = 'https://docs.google.com/sheets/d/e/2PACX-1vSnn8LNWJDXnoon7eJCAYKyF56JdW4Pn3jrUlWWH56YhRb1-p7Quv9DqXXb6tEfYMGjDn-wyt7qcqlX/pub?output=csv';
+        let csvTextData = "";
+        const csvUrl = "https://arborius.online/cards.csv";
         const cardTemplates = {};
         const cardnames = [];
         /**
@@ -332,12 +289,12 @@ vine,9,enter,exit,vine.png,Ailo the Wanderer,,,,,
         */
         async function fetchCsvData() {
             try {
-                // const response = await fetch(csvUrl);
-                // if (!response.ok) {
-                //     throw new Error(`HTTP error! status: ${response.status}`);
-                // }
-                // csvTextData = await response.text(); // Store raw CSV text
-
+                const response = await fetch(csvUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                csvTextData = await response.text(); // Store raw CSV text
+                console.log(csvTextData);
                 // Parse CSV data into cardTemplates Map
                 if (csvTextData) {
                     const rows = csvTextData.split('\n').filter(row => row.trim() !== '');
